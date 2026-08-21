@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LoveGod Outreach Team</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@1,400;1,500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:    #1A3C6B;
+    --blue-mid:#2A5298;
+    --gold:    #C8932A;
+    --gold-lt: #F0D080;
+    --ivory:   #F7F3ED;
+    --blue-lt: #E8F0FB;
+    --body:    #2D2D2D;
+    --muted:   #6B7280;
+    --white:   #FFFFFF;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--body); background: var(--ivory); overflow-x: hidden; }
+
+  /* ── NAV ──────────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%; height: 68px;
+    background: rgba(26,60,107,0.97); backdrop-filter: blur(8px);
+    transition: box-shadow .3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.25); }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon {
+    width: 36px; height: 36px; background: var(--gold);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .nav-logo-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--white); line-height: 1.1; }
+  .nav-logo-sub { font-size: 0.65rem; color: var(--gold-lt); font-family: 'Inter', sans-serif; font-weight: 400; letter-spacing: .05em; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
+  .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; font-size: .875rem; font-weight: 500; letter-spacing: .02em; transition: color .2s; }
+  .nav-links a:hover { color: var(--gold-lt); }
+  .nav-cta {
+    background: var(--gold); color: var(--blue); font-weight: 600; font-size: .85rem;
+    padding: 9px 22px; border-radius: 50px; text-decoration: none; letter-spacing: .02em;
+    transition: background .2s, transform .15s;
+  }
+  .nav-cta:hover { background: #e0a030; transform: translateY(-1px); }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+  .hamburger span { display: block; width: 24px; height: 2px; background: white; border-radius: 2px; transition: .3s; }
+  .mobile-menu {
+    display: none; position: fixed; top: 68px; left: 0; right: 0; z-index: 99;
+    background: var(--blue); padding: 24px 5%;
+    flex-direction: column; gap: 18px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 1rem; font-weight: 500; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .mobile-menu a:last-child { border-bottom: none; }
+
+  /* ── HERO ─────────────────────────────────────────────── */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center;
+    background: linear-gradient(145deg, var(--blue) 0%, #0d2445 55%, #1a3060 100%);
+    position: relative; overflow: hidden; padding-top: 68px;
+  }
+  .hero-bg-circles {
+    position: absolute; inset: 0; pointer-events: none;
+  }
+  .hero-bg-circles span {
+    position: absolute; border-radius: 50%; opacity: .07;
+    background: var(--gold);
+  }
+  .hero-bg-circles span:nth-child(1) { width: 500px; height: 500px; top: -120px; right: -80px; }
+  .hero-bg-circles span:nth-child(2) { width: 300px; height: 300px; bottom: 60px; left: -60px; }
+  .hero-bg-circles span:nth-child(3) { width: 180px; height: 180px; top: 40%; right: 20%; opacity: .04; }
+
+  .hero-inner {
+    position: relative; z-index: 2;
+    max-width: 1100px; margin: 0 auto; padding: 80px 5% 80px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(200,147,42,.15); border: 1px solid rgba(200,147,42,.3);
+    color: var(--gold-lt); font-size: .78rem; font-weight: 600; letter-spacing: .1em;
+    text-transform: uppercase; padding: 6px 14px; border-radius: 50px; margin-bottom: 22px;
+  }
+  .hero-eyebrow span { font-size: 14px; }
+  .hero h1 {
+    font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 18px;
+  }
+  .hero h1 em { color: var(--gold-lt); font-style: italic; }
+  .hero-verse {
+    font-family: 'Lora', serif; font-style: italic; font-size: 1rem;
+    color: rgba(255,255,255,.65); line-height: 1.7; margin-bottom: 28px;
+    border-left: 3px solid var(--gold); padding-left: 16px;
+  }
+  .hero-verse cite { display: block; font-style: normal; font-size: .82rem; margin-top: 4px; color: var(--gold-lt); font-family: 'Inter', sans-serif; }
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--blue); font-weight: 700; font-size: .9rem;
+    padding: 14px 28px; border-radius: 50px; text-decoration: none; letter-spacing: .02em;
+    transition: background .2s, transform .15s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: #e0a030; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,.4);
+    font-weight: 500; font-size: .9rem; padding: 14px 28px; border-radius: 50px;
+    text-decoration: none; letter-spacing: .02em; transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,.07); }
+
+  /* hero right — birthmonth wheel preview */
+  .hero-right { position: relative; display: flex; align-items: center; justify-content: center; }
+  .month-wheel {
+    width: 320px; height: 320px; position: relative;
+  }
+  .month-wheel-ring {
+    width: 100%; height: 100%; border-radius: 50%;
+    border: 2px solid rgba(200,147,42,.25);
+    position: absolute; inset: 0;
+    animation: spin 60s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .month-pip {
+    position: absolute; width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .62rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+    transform: translate(-50%, -50%);
+    transition: all .3s;
+  }
+  .month-pip.active { background: var(--gold); color: var(--blue); box-shadow: 0 0 0 6px rgba(200,147,42,.2); }
+  .month-pip.upcoming { background: rgba(255,255,255,.1); color: rgba(255,255,255,.6); border: 1px solid rgba(255,255,255,.15); }
+  .month-pip.highlight { background: var(--blue-mid); color: white; border: 2px solid var(--gold); animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(200,147,42,0.4); } 50% { box-shadow: 0 0 0 10px rgba(200,147,42,0); } }
+  .wheel-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    text-align: center; pointer-events: none;
+  }
+  .wheel-center .icon { font-size: 2.2rem; }
+  .wheel-center p { font-size: .7rem; color: rgba(255,255,255,.5); margin-top: 4px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; }
+
+  /* ── STATS BAR ────────────────────────────────────────── */
+  .stats-bar {
+    background: var(--blue); color: white;
+    display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
+  }
+  .stat-item {
+    padding: 28px 48px; text-align: center; border-right: 1px solid rgba(255,255,255,.1);
+    flex: 1; min-width: 150px;
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold-lt); }
+  .stat-label { font-size: .78rem; color: rgba(255,255,255,.6); margin-top: 2px; letter-spacing: .05em; text-transform: uppercase; }
+
+  /* ── SECTIONS ─────────────────────────────────────────── */
+  section { padding: 90px 5%; }
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+  .eyebrow {
+    font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 10px;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 700; color: var(--blue); line-height: 1.2; margin-bottom: 18px;
+  }
+  .section-lead { font-size: 1.05rem; color: var(--muted); line-height: 1.8; max-width: 680px; }
+
+  /* ── ABOUT ────────────────────────────────────────────── */
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 52px; }
+  .about-text p { font-size: .97rem; line-height: 1.85; color: #444; margin-bottom: 16px; }
+  .about-values { display: flex; flex-direction: column; gap: 14px; }
+  .value-card {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: var(--ivory); border-radius: 12px; padding: 18px 20px;
+    border-left: 4px solid var(--gold); transition: transform .2s, box-shadow .2s;
+  }
+  .value-card:hover { transform: translateX(4px); box-shadow: 0 4px 20px rgba(0,0,0,.07); }
+  .value-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+  .value-card h4 { font-size: .9rem; font-weight: 700; color: var(--blue); margin-bottom: 3px; }
+  .value-card p { font-size: .84rem; color: var(--muted); line-height: 1.6; }
+
+  /* ── HOW IT WORKS ─────────────────────────────────────── */
+  #how { background: var(--ivory); }
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 24px; margin-top: 52px; }
+  .step-card {
+    background: white; border-radius: 16px; padding: 28px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,.06); position: relative; overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .step-card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(0,0,0,.1); }
+  .step-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gold);
+  }
+  .step-num {
+    font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700;
+    color: rgba(26,60,107,.08); line-height: 1; margin-bottom: 10px;
+  }
+  .step-icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+  .step-card h3 { font-size: .95rem; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+  .step-card p { font-size: .84rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── BIRTH MONTH TIMELINE — SIGNATURE ELEMENT ─────────── */
+  #months { background: var(--blue); padding: 80px 5%; }
+  #months h2 { color: white; }
+  #months .eyebrow { color: var(--gold-lt); }
+  #months .section-lead { color: rgba(255,255,255,.65); }
+  .months-scroll { display: flex; gap: 14px; overflow-x: auto; padding: 40px 0 20px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.2) transparent; margin-top: 10px; }
+  .months-scroll::-webkit-scrollbar { height: 4px; }
+  .months-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,.2); border-radius: 2px; }
+  .month-card {
+    flex-shrink: 0; width: 150px; border-radius: 14px; padding: 20px 16px;
+    cursor: pointer; transition: all .25s; position: relative; overflow: hidden;
+    border: 1.5px solid rgba(255,255,255,.1);
+    background: rgba(255,255,255,.05);
+  }
+  .month-card:hover { transform: translateY(-4px); border-color: rgba(200,147,42,.5); }
+  .month-card.active-month {
+    background: var(--gold); border-color: var(--gold);
+    box-shadow: 0 8px 30px rgba(200,147,42,.35);
+  }
+  .month-card.active-month .mc-name,
+  .month-card.active-month .mc-status { color: var(--blue); }
+  .month-card.active-month .mc-members span { background: rgba(26,60,107,.15); color: var(--blue); }
+  .mc-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: white; margin-bottom: 6px; }
+  .mc-status {
+    font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(255,255,255,.5); margin-bottom: 12px;
+  }
+  .month-card.active-month .mc-status { color: var(--blue); }
+  .mc-members { display: flex; gap: 4px; flex-wrap: wrap; }
+  .mc-members span {
+    background: rgba(255,255,255,.1); color: rgba(255,255,255,.7);
+    border-radius: 50px; font-size: .68rem; padding: 3px 8px; font-weight: 500;
+  }
+  .mc-badge {
+    position: absolute; top: 12px; right: 12px; width: 10px; height: 10px; border-radius: 50%;
+    background: rgba(255,255,255,.2);
+  }
+  .month-card.active-month .mc-badge { background: var(--blue); }
+  .mc-tag {
+    display: inline-block; margin-top: 10px; font-size: .68rem; font-weight: 700;
+    letter-spacing: .06em; text-transform: uppercase; color: var(--gold-lt);
+    background: rgba(200,147,42,.15); padding: 3px 8px; border-radius: 4px;
+  }
+  .month-card.active-month .mc-tag { background: rgba(26,60,107,.15); color: var(--blue); }
+
+  /* ── KAYUNGA OUTREACH ─────────────────────────────────── */
+  #outreach { background: var(--white); }
+  .outreach-hero {
+    margin-top: 52px; border-radius: 20px; overflow: hidden;
+    display: grid; grid-template-columns: 1fr 1fr; min-height: 460px;
+  }
+  .outreach-visual {
+    background: linear-gradient(135deg, var(--blue) 0%, #0d2445 100%);
+    display: flex; flex-direction: column; justify-content: center; padding: 48px 44px;
+    position: relative; overflow: hidden;
+  }
+  .outreach-visual::after {
+    content: '🏥'; position: absolute; right: -20px; bottom: -20px;
+    font-size: 10rem; opacity: .06;
+  }
+  .outreach-label {
+    font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--gold-lt); margin-bottom: 16px;
+  }
+  .outreach-visual h3 {
+    font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700;
+    color: white; line-height: 1.3; margin-bottom: 14px;
+  }
+  .outreach-visual p { font-size: .9rem; color: rgba(255,255,255,.65); line-height: 1.75; margin-bottom: 24px; }
+  .outreach-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    background: rgba(200,147,42,.18); color: var(--gold-lt); border: 1px solid rgba(200,147,42,.3);
+    border-radius: 50px; font-size: .75rem; font-weight: 600; padding: 6px 14px; letter-spacing: .04em;
+  }
+  .outreach-content { background: var(--ivory); padding: 44px 40px; }
+  .outreach-content h4 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--blue); margin-bottom: 18px; font-weight: 700; }
+  .need-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .need-list li {
+    display: flex; align-items: center; gap: 12px;
+    font-size: .9rem; color: var(--body); line-height: 1.5;
+  }
+  .need-list li::before { content: '✓'; color: var(--gold); font-weight: 700; font-size: 1rem; flex-shrink: 0; }
+  .gospel-box {
+    margin-top: 24px; background: var(--blue-lt); border-radius: 12px;
+    padding: 18px 20px; border-left: 4px solid var(--blue);
+  }
+  .gospel-box p { font-family: 'Lora', serif; font-style: italic; font-size: .9rem; color: var(--blue); line-height: 1.7; }
+
+  /* ── PARTNER ──────────────────────────────────────────── */
+  #partner { background: var(--ivory); }
+  .partner-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 24px; margin-top: 52px; }
+  .partner-card {
+    background: white; border-radius: 16px; padding: 30px 26px;
+    box-shadow: 0 2px 14px rgba(0,0,0,.06); transition: all .25s;
+    border-top: 4px solid var(--gold);
+  }
+  .partner-card:hover { transform: translateY(-4px); box-shadow: 0 10px 36px rgba(0,0,0,.1); }
+  .partner-icon { font-size: 2.2rem; margin-bottom: 14px; display: block; }
+  .partner-card h3 { font-size: 1rem; font-weight: 700; color: var(--blue); margin-bottom: 8px; }
+  .partner-card p { font-size: .86rem; color: var(--muted); line-height: 1.7; }
+
+  /* ── JOIN ─────────────────────────────────────────────── */
+  #join {
+    background: linear-gradient(135deg, var(--blue) 0%, #0d2445 100%);
+    text-align: center; padding: 100px 5%;
+  }
+  #join h2 { color: white; }
+  #join .eyebrow { color: var(--gold-lt); }
+  #join .section-lead { color: rgba(255,255,255,.7); margin: 0 auto 40px; }
+  .join-verse {
+    font-family: 'Lora', serif; font-style: italic; font-size: 1.15rem;
+    color: rgba(255,255,255,.75); max-width: 600px; margin: 0 auto 40px;
+    line-height: 1.75; border-top: 1px solid rgba(255,255,255,.1); border-bottom: 1px solid rgba(255,255,255,.1);
+    padding: 24px 0;
+  }
+  .join-verse cite { display: block; font-style: normal; font-size: .82rem; margin-top: 8px; color: var(--gold-lt); font-family: 'Inter', sans-serif; }
+  .join-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-white {
+    background: white; color: var(--blue); font-weight: 700; font-size: .9rem;
+    padding: 15px 32px; border-radius: 50px; text-decoration: none;
+    transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-white:hover { background: var(--gold-lt); transform: translateY(-2px); }
+
+  /* ── CONTACT ──────────────────────────────────────────── */
+  #contact { background: white; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 52px; align-items: start; }
+  .contact-info p { font-size: .95rem; color: var(--muted); line-height: 1.8; margin-bottom: 28px; }
+  .contact-details { display: flex; flex-direction: column; gap: 14px; }
+  .contact-item { display: flex; align-items: center; gap: 14px; }
+  .contact-item-icon {
+    width: 40px; height: 40px; background: var(--blue-lt); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+  }
+  .contact-item-text p { font-size: .78rem; color: var(--muted); }
+  .contact-item-text strong { font-size: .9rem; color: var(--body); font-weight: 600; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: .8rem; font-weight: 600; color: var(--blue); letter-spacing: .03em; }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    border: 1.5px solid #E0E0E0; border-radius: 10px; padding: 12px 16px;
+    font-family: 'Inter', sans-serif; font-size: .9rem; color: var(--body);
+    outline: none; transition: border .2s; background: var(--ivory);
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus { border-color: var(--blue); background: white; }
+  .form-group textarea { resize: vertical; min-height: 110px; }
+  .form-submit {
+    background: var(--blue); color: white; font-weight: 700; font-size: .9rem;
+    padding: 14px 28px; border-radius: 50px; border: none; cursor: pointer;
+    letter-spacing: .02em; transition: background .2s, transform .15s;
+    display: flex; align-items: center; gap: 8px; width: fit-content;
+  }
+  .form-submit:hover { background: var(--blue-mid); transform: translateY(-1px); }
+  .form-success {
+    display: none; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 12px;
+    padding: 18px 20px; color: #166534; font-size: .9rem; font-weight: 500;
+    align-items: center; gap: 10px;
+  }
+  .form-success.show { display: flex; }
+
+  /* ── FOOTER ───────────────────────────────────────────── */
+  footer {
+    background: var(--blue); color: rgba(255,255,255,.6); text-align: center;
+    padding: 32px 5%; font-size: .82rem;
+  }
+  footer strong { color: white; }
+  footer a { color: var(--gold-lt); text-decoration: none; }
+
+  /* ── SCROLL REVEAL ────────────────────────────────────── */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ───────────────────────────────────────── */
+  @media (max-width: 768px) {
+    .nav-links, .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 5%; text-align: center; }
+    .hero-right { display: none; }
+    .hero-actions { justify-content: center; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .outreach-hero { grid-template-columns: 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .stat-item { padding: 20px 24px; }
+    section { padding: 60px 5%; }
+  }
+  @media (max-width: 480px) {
+    .steps-grid { grid-template-columns: 1fr; }
+    .partner-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .month-wheel-ring { animation: none; }
+    .month-pip.highlight { animation: none; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#home">
+    <div class="nav-logo-icon">❤</div>
+    <div>
+      <div class="nav-logo-text">LoveGod</div>
+      <div class="nav-logo-sub">Outreach Team</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#how">How It Works</a></li>
+    <li><a href="#outreach">First Outreach</a></li>
+    <li><a href="#partner">Partner</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="#partner">Support Us</a>
+  <button class="hamburger" id="hamburger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#how" onclick="closeMobile()">How It Works</a>
+  <a href="#outreach" onclick="closeMobile()">First Outreach</a>
+  <a href="#partner" onclick="closeMobile()">Partner With Us</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-circles">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow"><span>❤</span> Faith-Based Youth Outreach — Uganda</div>
+      <h1>Your Birthday is a<br/><em>Gift to Someone Else</em></h1>
+      <div class="hero-verse">
+        "For I was hungry and you gave me food, I was thirsty and you gave me drink, I was a stranger and you welcomed me."
+        <cite>— Matthew 25:35 (ESV)</cite>
+      </div>
+      <div class="hero-actions">
+        <a class="btn-primary" href="#outreach">↓ Our First Outreach</a>
+        <a class="btn-outline" href="#partner">Partner With Us</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="month-wheel" id="monthWheel">
+        <div class="month-wheel-ring"></div>
+        <div class="wheel-center">
+          <div class="icon">❤</div>
+          <p>12 Months<br/>of Giving</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Months of Outreach</div></div>
+  <div class="stat-item"><div class="stat-num">July</div><div class="stat-label">Inaugural Program</div></div>
+  <div class="stat-item"><div class="stat-num">Kayunga</div><div class="stat-label">First Location</div></div>
+  <div class="stat-item"><div class="stat-num">∞</div><div class="stat-label">Lives to Touch</div></div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="eyebrow">Who We Are</div>
+    <h2>Born to Give Back</h2>
+    <p class="section-lead">LoveGod Outreach Team is a youth-led, faith-driven movement that turns birthdays into community blessings — one month at a time.</p>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>We are a team of young Christians from Uganda who believe that every birthday is more than a personal celebration. It is a God-given opportunity to pour love into the communities around us.</p>
+        <p>Founded on a simple but powerful conviction, we organize structured community outreach programs where members who share the same birth month come together, identify a vulnerable community, and serve them with practical support and the Gospel of Jesus Christ.</p>
+        <p>We are not waiting to grow up to make a difference. We are the church today — and today, we choose to give.</p>
+      </div>
+      <div class="about-values reveal">
+        <div class="value-card">
+          <div class="value-icon">✝️</div>
+          <div>
+            <h4>Faith First</h4>
+            <p>Every outreach begins and ends with prayer. The Gospel is our core message.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🤝</div>
+          <div>
+            <h4>Compassion in Action</h4>
+            <p>We see every needy person as made in God's image, worthy of dignity and care.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🔥</div>
+          <div>
+            <h4>Youth Empowerment</h4>
+            <p>Young people are not the church of tomorrow. We are the church of today.</p>
+          </div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">📅</div>
+          <div>
+            <h4>Consistent Giving</h4>
+            <p>Birth months ensure regular, sustained engagement — not a one-time event.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-inner">
+    <div class="eyebrow">How It Works</div>
+    <h2>The Birth Month Model</h2>
+    <p class="section-lead">Our mode of operation is personal, sustainable, and beautifully simple. Here's how every outreach is born.</p>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">01</div>
+        <span class="step-icon">🎂</span>
+        <h3>Group by Birth Month</h3>
+        <p>Members who share the same birth month form a dedicated sub-team for that month's outreach.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">02</div>
+        <span class="step-icon">📍</span>
+        <h3>Choose a Community</h3>
+        <p>The sub-team identifies a vulnerable community — hospitals, schools, rural areas, or urban slums.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">03</div>
+        <span class="step-icon">🙌</span>
+        <h3>Mobilize Resources</h3>
+        <p>The team gathers support internally and through partners to fund and equip the outreach.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">04</div>
+        <span class="step-icon">❤</span>
+        <h3>Serve & Minister</h3>
+        <p>On outreach day, practical items are distributed and the Gospel of Jesus Christ is shared.</p>
+      </div>
+      <div class="step-card reveal">
+        <div class="step-num">05</div>
+        <span class="step-icon">📖</span>
+        <h3>Report & Give Thanks</h3>
+        <p>The team documents impact, shares testimonies, and prepares for the next month's team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIRTH MONTH TIMELINE -->
+<section id="months">
+  <div class="section-inner">
+    <div class="eyebrow">The 12-Month Cycle</div>
+    <h2>Every Month, Someone Gives</h2>
+    <p class="section-lead">Our calendar of compassion — 12 months, 12 opportunities to change a life. July is where we begin.</p>
+    <div class="months-scroll" id="monthsScroll"></div>
+  </div>
+</section>
+
+<!-- OUTREACH -->
+<section id="outreach">
+  <div class="section-inner">
+    <div class="eyebrow">Inaugural Outreach — July 2026</div>
+    <h2>Kayunga Hospital: <br/>Caring for Expectant Mothers</h2>
+    <div class="outreach-hero reveal">
+      <div class="outreach-visual">
+        <div class="outreach-label">📍 Kayunga District Hospital, Uganda</div>
+        <h3>Reaching Pregnant Women in Their Most Vulnerable Season</h3>
+        <p>Our first outreach targets expectant mothers in the maternity ward of Kayunga District Hospital — women who need practical support, dignity, and the hope of the Gospel as they prepare to bring new life into the world.</p>
+        <div class="outreach-chips">
+          <span class="chip">Mid-July 2026</span>
+          <span class="chip">Kayunga Region</span>
+          <span class="chip">Maternal Support</span>
+          <span class="chip">Gospel Ministry</span>
+        </div>
+      </div>
+      <div class="outreach-content">
+        <h4>What We Will Provide</h4>
+        <ul class="need-list">
+          <li>Sanitary pads &amp; personal hygiene kits</li>
+          <li>Baby clothes, diapers &amp; wrapping cloths</li>
+          <li>Nutritional food packages (porridge, rice, oil)</li>
+          <li>Soap and washing basins</li>
+          <li>Small towels and bedding items</li>
+          <li>Scripture cards and Gospel tracts</li>
+          <li>Prayer and personal ministry</li>
+        </ul>
+        <div class="gospel-box">
+          <p>"Above all else, we go to bring the hope of Jesus Christ — because a mother who meets the Saviour receives far more than a gift bag. She receives life."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNER -->
+<section id="partner">
+  <div class="section-inner">
+    <div class="eyebrow">Partnership Opportunities</div>
+    <h2>Be Part of This Story</h2>
+    <p class="section-lead">Partnering with LoveGod Outreach Team is more than a donation — it is a seed sown into the Kingdom of God through the lives of Uganda's most vulnerable.</p>
+    <div class="partner-grid">
+      <div class="partner-card reveal">
+        <span class="partner-icon">💰</span>
+        <h3>Financial Partner</h3>
+        <p>Contribute funds to help us purchase support items and cover logistics for the Kayunga outreach.</p>
+      </div>
+      <div class="partner-card reveal">
+        <span class="partner-icon">📦</span>
+        <h3>Item Donor</h3>
+        <p>Donate hygiene kits, baby clothing, food packages, or any of our listed support items directly.</p>
+      </div>
+      <div class="partner-card reveal">
+        <span class="partner-icon">🙏</span>
+        <h3>Prayer Partner</h3>
+        <p>Commit to covering our team, the mothers, and the outreach in prayer before, during, and after.</p>
+      </div>
+      <div class="partner-card reveal">
+        <span class="partner-icon">👐</span>
+        <h3>Ground Volunteer</h3>
+        <p>Join us on-site in Kayunga to serve alongside the team and minister to the mothers in person.</p>
+      </div>
+      <div class="partner-card reveal">
+        <span class="partner-icon">🌱</span>
+        <h3>Mentor &amp; Advisor</h3>
+        <p>Offer strategic counsel to help us grow, structure, and sustain our outreach programs long-term.</p>
+      </div>
+      <div class="partner-card reveal">
+        <span class="partner-icon">📣</span>
+        <h3>Ambassador</h3>
+        <p>Help us reach other donors, churches, and suppliers by spreading the word about our mission.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JOIN -->
+<section id="join">
+  <div class="section-inner">
+    <div class="eyebrow">Join the Team</div>
+    <h2>Your Birthday Could Change a Life</h2>
+    <p class="section-lead">If you are a young Christian who believes giving is a form of worship, LoveGod Outreach Team is your community.</p>
+    <div class="join-verse">
+      "Each of you should give what you have decided in your heart to give, not reluctantly or under compulsion, for God loves a cheerful giver."
+      <cite>— 2 Corinthians 9:7 (NIV)</cite>
+    </div>
+    <div class="join-actions">
+      <a class="btn-white" href="#contact">Join as a Member</a>
+      <a class="btn-outline" href="#contact">Partner With Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="eyebrow">Get In Touch</div>
+    <h2>Let's Talk</h2>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p>Whether you want to partner financially, donate items, volunteer your time, or simply find out more — we would love to hear from you. Every conversation is a step toward changing a life.</p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <div class="contact-item-icon">📍</div>
+            <div class="contact-item-text">
+              <p>Based in</p>
+              <strong>Kampala, Uganda</strong>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📧</div>
+            <div class="contact-item-text">
+              <p>Email us at</p>
+              <strong>[Your Email Address]</strong>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">📱</div>
+            <div class="contact-item-text">
+              <p>Call or WhatsApp</p>
+              <strong>[Your Phone Number]</strong>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">✝️</div>
+            <div class="contact-item-text">
+              <p>First outreach</p>
+              <strong>Mid-July 2026 — Kayunga Hospital</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="contact-form" id="contactForm">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="e.g. Pastor John Mukasa" id="fname"/>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="you@example.com" id="femail"/>
+          </div>
+          <div class="form-group">
+            <label>How do you want to help?</label>
+            <select id="ftype">
+              <option value="">Select one...</option>
+              <option>Financial Partner</option>
+              <option>Item Donor</option>
+              <option>Prayer Partner</option>
+              <option>Ground Volunteer</option>
+              <option>Mentor / Advisor</option>
+              <option>Join as a Member</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us a bit about yourself or how you'd like to be involved..." id="fmessage"></textarea>
+          </div>
+          <button class="form-submit" onclick="submitForm()">Send Message ❤</button>
+          <div class="form-success" id="formSuccess">
+            ✅ Thank you! We will get back to you shortly. God bless you.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>LoveGod Outreach Team</strong> — Kampala, Uganda &nbsp;|&nbsp; Reaching Communities, One Birthday at a Time</p>
+  <p style="margin-top:8px">"For we are God's handiwork, created in Christ Jesus to do good works." — Ephesians 2:10</p>
+  <p style="margin-top:12px; font-size:.75rem">© 2026 LoveGod Outreach Team. All rights reserved.</p>
+</footer>
+
+<script>
+// ── NAV SCROLL SHADOW ──────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// ── HAMBURGER ─────────────────────────────────────────
+document.getElementById('hamburger').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('open');
+});
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ── MONTH WHEEL ───────────────────────────────────────
+(function buildWheel() {
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const wheel = document.getElementById('monthWheel');
+  const radius = 130;
+  const cx = 160, cy = 160;
+  months.forEach((m, i) => {
+    const angle = (i / 12) * 2 * Math.PI - Math.PI / 2;
+    const x = cx + radius * Math.cos(angle);
+    const y = cy + radius * Math.sin(angle);
+    const pip = document.createElement('div');
+    pip.className = 'month-pip ' + (i === 6 ? 'highlight' : i < 6 ? 'upcoming' : 'upcoming');
+    pip.style.left = x + 'px';
+    pip.style.top = y + 'px';
+    pip.textContent = m;
+    wheel.appendChild(pip);
+  });
+})();
+
+// ── BIRTH MONTH TIMELINE ──────────────────────────────
+(function buildTimeline() {
+  const months = [
+    { name: 'January',   status: 'Upcoming', members: ['🎂','🎂','🎂'], tag: null },
+    { name: 'February',  status: 'Upcoming', members: ['🎂','🎂'], tag: null },
+    { name: 'March',     status: 'Upcoming', members: ['🎂','🎂','🎂','🎂'], tag: null },
+    { name: 'April',     status: 'Upcoming', members: ['🎂','🎂'], tag: null },
+    { name: 'May',       status: 'Upcoming', members: ['🎂','🎂','🎂'], tag: null },
+    { name: 'June',      status: 'Upcoming', members: ['🎂','🎂'], tag: null },
+    { name: 'July',      status: 'ACTIVE',   members: ['🎂','🎂','🎂','🎂','🎂'], tag: '🏥 Kayunga Hospital' },
+    { name: 'August',    status: 'Upcoming', members: ['🎂','🎂','🎂'], tag: null },
+    { name: 'September', status: 'Upcoming', members: ['🎂','🎂'], tag: null },
+    { name: 'October',   status: 'Upcoming', members: ['🎂','🎂','🎂'], tag: null },
+    { name: 'November',  status: 'Upcoming', members: ['🎂','🎂'], tag: null },
+    { name: 'December',  status: 'Upcoming', members: ['🎂','🎂','🎂'], tag: null },
+  ];
+
+  const container = document.getElementById('monthsScroll');
+  months.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'month-card' + (m.status === 'ACTIVE' ? ' active-month' : '');
+    card.innerHTML = `
+      <div class="mc-badge"></div>
+      <div class="mc-name">${m.name}</div>
+      <div class="mc-status">${m.status}</div>
+      <div class="mc-members">${m.members.map(e => `<span>${e}</span>`).join('')}</div>
+      ${m.tag ? `<div class="mc-tag">${m.tag}</div>` : ''}
+    `;
+    container.appendChild(card);
+  });
+
+  // auto-scroll to July
+  setTimeout(() => {
+    const july = container.children[6];
+    if (july) july.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+  }, 800);
+})();
+
+// ── SCROLL REVEAL ──────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── FORM ───────────────────────────────────────────────
+function submitForm() {
+  const name = document.getElementById('fname').value.trim();
+  const email = document.getElementById('femail').value.trim();
+  const type = document.getElementById('ftype').value;
+  if (!name || !email || !type) {
+    alert('Please fill in your name, email, and how you would like to help.');
+    return;
+  }
+  document.getElementById('formSuccess').classList.add('show');
+  document.getElementById('fname').value = '';
+  document.getElementById('femail').value = '';
+  document.getElementById('ftype').value = '';
+  document.getElementById('fmessage').value = '';
+}
+</script>
+</body>
+</html>
