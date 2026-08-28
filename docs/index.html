@@ -5,6 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="LoveGod Outreach Team, founded by Minister Daniel Christian, serving communities in Uganda through practical care and the love of Jesus Christ.">
   <title>LoveGod Outreach Team | Driven by Love4MyGod</title>
+  <script>
+    (() => {
+      const repairMediaPath = (element) => {
+        ['src', 'poster'].forEach((attribute) => {
+          const value = element.getAttribute(attribute);
+          if (value && value.startsWith('../')) element.setAttribute(attribute, value.slice(3));
+        });
+      };
+      new MutationObserver((records) => records.forEach((record) => record.addedNodes.forEach((node) => {
+        if (node.nodeType === 1) {
+          repairMediaPath(node);
+          node.querySelectorAll?.('[src], [poster]').forEach(repairMediaPath);
+        }
+      }))).observe(document, { childList: true, subtree: true });
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -137,7 +153,7 @@
 </head>
 <body>
   <header><div class="wrap"><nav>
-    <a class="brand" href="#top"><img src="../images/Team%20logo.jpeg" alt="LoveGod Outreach Team logo"><span><strong>LoveGod Outreach</strong><small>Driven by Love4MyGod</small></span></a>
+    <a class="brand" href="#top"><img src="images/Team%20logo.jpeg" alt="LoveGod Outreach Team logo"><span><strong>LoveGod Outreach</strong><small>Driven by Love4MyGod</small></span></a>
     <ul class="nav-links"><li><a href="#top">Home</a></li><li><a href="#story">Our story</a></li><li><a href="#how">How it works</a></li><li><a href="#activities">Activities</a></li><li><a href="#contact">Contact</a></li><li><a href="#reel">Blog</a></li></ul>
     <a class="nav-join" href="#contact">Join the mission</a>
   </nav></div></header>
