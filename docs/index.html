@@ -33,22 +33,40 @@
     .nav-links a { color:#eee6f5; font-size:.84rem; }
     .nav-links a:hover { color:var(--gold); }
     .nav-join { border:1px solid var(--gold); color:var(--gold); font-size:.78rem; font-weight:700; padding:9px 14px; }
-    .hero { background:var(--purple-deep); color:white; min-height:calc(100vh - 76px); overflow:hidden; padding:70px 0 90px; position:relative; }
-    .hero:before { background:radial-gradient(circle, rgba(111,53,173,.6), transparent 68%); content:''; height:620px; position:absolute; right:-150px; top:-180px; width:620px; }
-    .hero-grid { align-items:center; display:grid; gap:70px; grid-template-columns:.92fr 1.08fr; position:relative; }
+    .hero { background:var(--purple-deep); color:white; min-height:calc(100vh - 76px); overflow:hidden; padding:0; position:relative; }
+    .hero:before { background:linear-gradient(90deg,rgba(25,11,50,.94) 0%,rgba(25,11,50,.68) 48%,rgba(25,11,50,.28) 100%); content:''; inset:0; position:absolute; z-index:1; }
+    .hero-grid { align-items:center; display:flex; min-height:calc(100vh - 76px); position:relative; z-index:2; }
+    .hero-copy { animation:heroWords 1s ease both; max-width:650px; }
     .hero-copy h1 { font-size:clamp(3rem,6vw,5.6rem); margin:20px 0 24px; max-width:650px; }
     .hero-copy h1 span { color:var(--gold); display:block; }
     .hero-copy p { color:#ddd2e9; font-size:1.06rem; max-width:520px; }
     .hero-actions { display:flex; flex-wrap:wrap; gap:12px; margin-top:32px; }
     .hero-note { border-left:2px solid var(--gold); color:#d5c6e2; font-size:.82rem; margin-top:35px; padding-left:15px; }
     .verse { color:#eadcf5; font-family:'Manrope'; font-size:.92rem; font-style:italic; margin-top:24px; }
-    .hero-photo { height:590px; position:relative; }
+    .hero-photo { display:none; }
     .hero-photo:after { border:1px solid rgba(232,184,63,.65); content:''; inset:18px -18px -18px 18px; position:absolute; z-index:0; }
     .hero-photo img { height:100%; position:relative; z-index:1; }
     .hero-stamp { background:var(--gold); bottom:28px; color:var(--purple-deep); font-weight:800; padding:17px 19px; position:absolute; right:-23px; text-transform:uppercase; width:166px; z-index:2; }
     .hero-stamp strong { display:block; font-family:'Manrope'; font-size:1.3rem; }
     .ribbon { background:var(--gold); color:var(--purple-deep); font-size:.78rem; font-weight:800; letter-spacing:.08em; padding:14px; text-align:center; text-transform:uppercase; }
     section { padding:100px 0; }
+    .film-stage { overflow:hidden; position:relative; }
+    .film-slide { display:none; position:relative; }
+    .film-slide.active { animation:filmIn .8s ease both; display:block; }
+    .film-slide img { aspect-ratio:16/9; height:100%; object-fit:cover; }
+    .film-caption { background:linear-gradient(transparent,rgba(20,7,39,.9)); bottom:0; left:0; padding:60px 24px 22px; position:absolute; right:0; }
+    .film-caption strong { display:block; font-family:'Manrope'; font-size:1.25rem; }
+    .film-caption span { color:var(--gold); font-size:.75rem; letter-spacing:.12em; text-transform:uppercase; }
+    .film-dots { display:flex; gap:8px; margin-top:14px; }
+    .film-dot { background:rgba(255,255,255,.35); border:0; border-radius:50%; cursor:pointer; height:8px; padding:0; width:8px; }
+    .film-dot.active { background:var(--gold); transform:scale(1.35); }
+    @keyframes filmIn { from { opacity:0; transform:scale(1.04); } to { opacity:1; transform:scale(1); } }
+    @keyframes heroWords { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .hero-background { inset:0; position:absolute; z-index:0; }
+    .hero-background .film-stage, .hero-background .film-slide, .hero-background .film-slide img { height:100%; width:100%; }
+    .hero-background .film-slide img { aspect-ratio:auto; }
+    .hero-background .film-caption { display:none; }
+    .hero-background .film-dots { bottom:28px; left:50%; margin:0; position:absolute; transform:translateX(-50%); z-index:3; }
     .section-head { align-items:end; display:flex; justify-content:space-between; margin-bottom:38px; }
     .section-head h2 { margin-top:12px; }
     .intro { color:var(--muted); max-width:440px; }
@@ -71,6 +89,15 @@
     .date-card span { font-size:.7rem; font-weight:800; letter-spacing:.15em; text-transform:uppercase; }
     .date-card strong { display:block; font-family:'Manrope'; font-size:2.7rem; line-height:1; margin:10px 0; }
     .date-card p { color:var(--purple-deep); font-size:.9rem; }
+    .how { background:#f1ebf7; }
+    .how-copy { color:var(--muted); max-width:700px; margin-top:18px; }
+    .teams-grid { display:grid; gap:10px; grid-template-columns:repeat(4,1fr); margin-top:35px; }
+    .team-card { background:white; border-top:3px solid var(--violet); padding:16px; }
+    .team-card strong { color:var(--purple); display:block; font-family:'Manrope'; }
+    .team-card a { color:var(--violet); display:inline-block; font-size:.75rem; font-weight:700; margin-top:8px; }
+    .general-group { background:var(--purple); color:white; display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; margin-top:24px; padding:22px; }
+    .general-group p { color:#e7dcef; max-width:620px; }
+    .general-group a { color:var(--gold); font-weight:800; }
     .partner { background:#f1ebf7; }
     .partner-grid { align-items:center; display:grid; gap:54px; grid-template-columns:1fr 1fr; }
     .partner-photo { height:430px; }
@@ -99,7 +126,8 @@
     .contact p { color:#d5c8e0; max-width:490px; }
     .contact-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:28px; }
     .contact-links a { border-bottom:1px solid var(--gold); color:var(--gold); padding-bottom:3px; }
-    .whatsapp-float { align-items:center; background:#25d366; border:3px solid white; border-radius:50%; bottom:22px; box-shadow:0 5px 18px rgba(0,0,0,.25); color:white; display:flex; font-size:1.4rem; height:58px; justify-content:center; position:fixed; right:22px; width:58px; z-index:20; }
+    .whatsapp-float { align-items:center; background:#25d366; border:2px solid white; border-radius:999px; bottom:22px; box-shadow:0 5px 18px rgba(0,0,0,.25); color:white; display:flex; font-size:.78rem; font-weight:800; gap:8px; padding:9px 15px 9px 10px; position:fixed; right:22px; z-index:20; }
+    .whatsapp-float svg { fill:currentColor; height:23px; width:23px; }
     .whatsapp-float:hover { background:#1da851; transform:translateY(-2px); }
     footer { background:#10071f; color:#a99bb5; font-size:.78rem; padding:28px 0; }
     footer .wrap { align-items:center; display:flex; justify-content:space-between; }
@@ -110,24 +138,43 @@
 <body>
   <header><div class="wrap"><nav>
     <a class="brand" href="#top"><img src="../images/Team%20logo.jpeg" alt="LoveGod Outreach Team logo"><span><strong>LoveGod Outreach</strong><small>Driven by Love4MyGod</small></span></a>
-    <ul class="nav-links"><li><a href="#top">Home</a></li><li><a href="#story">Our story</a></li><li><a href="#mission">How it works</a></li><li><a href="#gallery">Activities</a></li><li><a href="#contact">Contact</a></li><li><a href="#reel">Blog</a></li></ul>
+    <ul class="nav-links"><li><a href="#top">Home</a></li><li><a href="#story">Our story</a></li><li><a href="#how">How it works</a></li><li><a href="#activities">Activities</a></li><li><a href="#contact">Contact</a></li><li><a href="#reel">Blog</a></li></ul>
     <a class="nav-join" href="#contact">Join the mission</a>
   </nav></div></header>
   <main id="top">
     <div class="ribbon">August 24–30, 2026 &nbsp; / &nbsp; EOS Revival Mission with Geuza Ministries</div>
-    <section class="hero"><div class="wrap hero-grid">
-        <div class="hero-copy"><div class="eyebrow">Minister Daniel Christian Foundation · Uganda</div><h1>Love that leaves the <span>church doors.</span></h1><p>LoveGod Outreach Team exists to carry the love of Jesus into real places, with practical compassion, prayer, and a willing heart.</p><div class="hero-actions"><a class="button" href="#mission">See our next mission <span>↗</span></a><a class="button alt" href="#gallery">View Kayunga</a></div><div class="hero-note">Our first outreach took us to Kayunga Referral Hospital, serving and ministering alongside Jesus Saves Street Ministry.</div><p class="verse">“Simon, son of John, do you love me? ... Feed my sheep.” — John 21:17</p></div>
+    <section class="hero"><div class="hero-background"><div class="film-stage" id="filmStage"><figure class="film-slide active"><img src="../images/IM%20(4).jpg" alt="LoveGod Outreach missioner"><figcaption class="film-caption"><span>Love in action</span><strong>Serving with compassion</strong></figcaption></figure><figure class="film-slide"><img src="../images/IM%20(5).jpg" alt="LoveGod Outreach team member"><figcaption class="film-caption"><span>One body, many hands</span><strong>Together in faith</strong></figcaption></figure><figure class="film-slide"><img src="../images/IM%20(6).jpg" alt="LoveGod Outreach team fellowship"><figcaption class="film-caption"><span>Driven by love</span><strong>Showing up for people</strong></figcaption></figure><figure class="film-slide"><img src="../images/IM%20(7).jpg" alt="LoveGod Outreach mission team"><figcaption class="film-caption"><span>Kayunga Referral Hospital</span><strong>A mission to remember</strong></figcaption></figure><figure class="film-slide"><img src="../images/Team%20shirts.jpeg" alt="LoveGod Outreach Team shirts"><figcaption class="film-caption"><span>LoveGod Outreach Team</span><strong>Driven by Love4MyGod</strong></figcaption></figure></div><div class="film-dots" aria-label="Choose a mission image"><button class="film-dot active" type="button" aria-label="Show mission image 1"></button><button class="film-dot" type="button" aria-label="Show mission image 2"></button><button class="film-dot" type="button" aria-label="Show mission image 3"></button><button class="film-dot" type="button" aria-label="Show mission image 4"></button><button class="film-dot" type="button" aria-label="Show mission image 5"></button></div></div><div class="wrap hero-grid">
+        <div class="hero-copy"><div class="eyebrow">Minister Daniel Christian Foundation · Uganda</div><h1>Love that leaves the <span>church doors.</span></h1><p>LoveGod Outreach Team exists to carry the love of Jesus into real places, with practical compassion, prayer, and a willing heart.</p><div class="hero-actions"><a class="button" href="#mission">See our next mission <span>↗</span></a><a class="button alt" href="#activities">View Activities</a></div><div class="hero-note">Our first outreach took us to Kayunga Referral Hospital, serving and ministering alongside Jesus Saves Street Ministry.</div><p class="verse">“Simon, son of John, do you love me? ... Feed my sheep.” — John 21:17</p></div>
       <div class="hero-photo"><img src="../images/IM%20(1).jpg" alt="LoveGod Outreach team member serving in the community"><div class="hero-stamp"><strong>First outreach</strong>Kayunga · 2026</div></div>
     </div></section>
     <section id="story"><div class="wrap story-grid"><div class="story-image"><img src="../images/IM%20(2).jpg" alt="LoveGod Outreach team at Kayunga Referral Hospital"></div><div class="story-copy"><div class="eyebrow">Where it began</div><h2>Kayunga was more than a visit.</h2><p>In our first outreach, LoveGod Outreach Team went to Kayunga Referral Hospital with a simple conviction: people deserve to be met with dignity, kindness, and the hope of Christ.</p><p>We were grateful to serve together with <strong>Jesus Saves Street Ministry</strong>, led by <strong>Evangelist Timothy</strong>, who led us during the mission to Kayunga.</p><div class="quote">“Driven by love for my God, we make His love visible.”</div><div class="facts"><div><strong>01</strong><span>First outreach</span></div><div><strong>Kayunga</strong><span>Referral hospital</span></div><div><strong>2 teams</strong><span>Serving together</span></div></div></div></div></section>
+    <section class="how" id="how"><div class="wrap"><div class="eyebrow">How it works</div><h2>One team for every birth month.</h2><p class="how-copy">LoveGod Outreach Team operates through 12 teams. Members who share a birth month form a team, plan together, and reach their communities through one outreach each month. Each team has a WhatsApp group for prayer, planning, and coordination.</p><div class="teams-grid"><div class="team-card"><strong>Team January</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20January">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team February</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20February">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team March</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20March">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team April</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20April">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team May</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20May">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team June</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20June">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team July</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20July">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team August</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20August">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team September</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20September">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team October</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20October">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team November</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20November">Request WhatsApp access ↗</a></div><div class="team-card"><strong>Team December</strong><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20Team%20December">Request WhatsApp access ↗</a></div></div><div class="general-group"><p><strong>General LoveGod Outreach Group</strong><br>Anyone who shares this vision can join our general WhatsApp community and learn how to serve.</p><a href="https://wa.me/256701964577?text=Hello%20I%20would%20like%20to%20join%20the%20general%20LoveGod%20Outreach%20group">Join the general group ↗</a></div></div></section>
     <section class="mission dark" id="mission"><div class="wrap mission-grid"><div><div class="eyebrow">What is next</div><h2>We are joining the EOS Revival Mission.</h2><p>This August, LoveGod Outreach Team will join Geuza Ministries for a week of revival, prayer, and Gospel ministry. Come stand with us as we serve, worship, and share the love of Jesus from 24 to 30 August 2026.</p><div class="hero-actions"><a class="button" href="#contact">Partner with us ↗</a></div></div><div class="date-card"><span>Save the dates</span><strong>24—30<br>August 2026</strong><p>EOS Revival Mission<br>With Geuza Ministries</p></div></div></section>
-    <section class="partner"><div class="wrap partner-grid"><div class="partner-photo"><img src="../images/IM%20(3).jpg" alt="LoveGod Outreach and Jesus Saves Street Ministry leaders"></div><div class="partner-copy"><div class="eyebrow">Kingdom partnership</div><h2>We do more together.</h2><p>Our Kayunga mission was strengthened by the partnership of Jesus Saves Street Ministry. We honour Evangelist Timothy for leading the mission and for the shared heart to reach people with the Gospel.</p><p class="partner-mark">LoveGod Outreach × Jesus Saves Street Ministry</p></div></div></section>
-    <section class="gallery" id="gallery"><div class="wrap"><div class="section-head"><div><div class="eyebrow">Field notes</div><h2>Moments from Kayunga.</h2></div><p class="intro">A small record of the people, service, and fellowship that marked our first outreach.</p></div><div class="gallery-grid"><figure><img src="../images/IM%20(4).jpg" alt="Kayunga outreach moment"><figcaption>Serving with compassion</figcaption></figure><figure><img src="../images/IM%20(5).jpg" alt="LoveGod Outreach team member"><figcaption>On mission</figcaption></figure><figure><img src="../images/IM%20(6).jpg" alt="Outreach fellowship"><figcaption>Together in faith</figcaption></figure><figure><img src="../images/IM%20(7).jpg" alt="Kayunga community outreach"><figcaption>Love in action</figcaption></figure><figure><img src="../images/Team%20shirts.jpeg" alt="LoveGod Outreach Team shirts"><figcaption>Driven by Love4MyGod</figcaption></figure></div></div></section>
+    <section class="partner" id="activities"><div class="wrap partner-grid"><div class="partner-photo"><img src="../images/IM%20(3).jpg" alt="LoveGod Outreach and Jesus Saves Street Ministry leaders"></div><div class="partner-copy"><div class="eyebrow">Our activities</div><h2>From Kayunga to Kalaki.</h2><p><strong>Kayunga Referral Hospital:</strong> our first outreach, where we served with Jesus Saves Street Ministry led by Evangelist Timothy.</p><p><strong>Kalaki District:</strong> our upcoming mission as we join the EOS Revival Mission team with Geuza Ministries from 24 to 30 August 2026.</p><p class="partner-mark">LoveGod Outreach × Jesus Saves Street Ministry × Geuza Ministries</p></div></div></section>
       <section class="reel" id="reel"><div class="wrap"><div class="section-head"><div><div class="eyebrow">From the field</div><h2>Watch the mission unfold.</h2></div><p class="intro">A short moment from our Kayunga outreach. The remaining videos stay on your computer while the smallest clip travels with the website.</p></div><div class="reel-grid"><div><video controls preload="metadata" poster="../images/IM%20(1).jpg"><source src="../Kayunga%20videos/V%20(8).mp4" type="video/mp4"></video><p class="reel-label">Kayunga outreach · highlight</p></div></div></div></section>
     <section id="founder"><div class="wrap founder-grid"><div class="founder-photo"><img src="../images/LoveGod%20Outreach%20Founder.jpeg" alt="Minister Daniel Christian, founder of LoveGod Outreach Team"></div><div class="founder-copy"><div class="eyebrow">Meet the founder</div><h2>Faith with its sleeves rolled up.</h2><p class="founder-name">Minister Daniel Christian</p><p>LoveGod Outreach Team was founded by Minister Daniel Christian as a response to God's love: to mobilize young people, serve communities, and make the Gospel tangible through action.</p><p>From the first step in Kayunga to the EOS Revival Mission, the vision is clear: love God deeply, love people practically, and keep showing up.</p><a class="button" href="#contact">Connect with the team ↗</a></div></div></section>
     <section class="contact" id="contact"><div class="wrap contact-grid"><div><div class="eyebrow">Take your place</div><h2>Pray. Serve. Give. Go.</h2><p>There is room for you in this story. Join the August mission, support the work, or connect with us to learn how you can serve.</p><div class="contact-links"><a href="mailto:kizodanjr@gmail.com">kizodanjr@gmail.com</a><a href="tel:+256754105347">+256 754 105347</a><a href="tel:+256778402387">+256 778 402387</a><a href="https://wa.me/256701964577" aria-label="Contact LoveGod Outreach Team on WhatsApp">WhatsApp: +256 701 964577</a></div></div><div><img src="../images/July%20First%20Edition%20Poster.jpeg" alt="LoveGod Outreach Team mission poster"></div></div></section>
   </main>
     <footer><div class="wrap"><p><strong>LoveGod Outreach Team</strong> · Kampala, Uganda</p><p>© 2026 Minister Daniel Christian Foundation</p></div></footer>
-    <a class="whatsapp-float" href="https://wa.me/256701964577" aria-label="Chat with LoveGod Outreach Team on WhatsApp" title="WhatsApp LoveGod Outreach Team">☏</a>
+    <a class="whatsapp-float" href="https://wa.me/256701964577" aria-label="Chat with LoveGod Outreach Team on WhatsApp" title="WhatsApp LoveGod Outreach Team"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a9.8 9.8 0 0 0-8.5 14.7L2 22l5.5-1.4A10 10 0 1 0 12 2Zm0 17.8a8 8 0 0 1-4.1-1.1l-.4-.2-3.3.8.9-3.2-.2-.4A8 8 0 1 1 12 19.8Zm4.4-5.9c-.2-.1-1.3-.6-1.5-.7-.2-.1-.4-.1-.6.1l-.7.9c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-1.8-1.1 7 7 0 0 1-1.2-1.5c-.1-.2 0-.3.1-.4l.4-.5.2-.4c.1-.1 0-.3 0-.4l-.7-1.7c-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9s.8 2.2.9 2.3c.1.2 1.6 2.5 3.9 3.5.5.2.9.4 1.2.5.5.2 1 .2 1.3.1.4-.1 1.3-.5 1.5-1 .2-.5.2-.9.1-1-.1-.1-.3-.2-.5-.3Z"/></svg><span>WhatsApp us</span></a>
+    <script>
+      (() => {
+        const slides = [...document.querySelectorAll('.film-slide')];
+        const dots = [...document.querySelectorAll('.film-dot')];
+        let current = 0;
+        let timer;
+        const showSlide = (index) => {
+          current = index % slides.length;
+          slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+          dots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+        };
+        const restart = () => {
+          clearInterval(timer);
+          timer = setInterval(() => showSlide(current + 1), 4200);
+        };
+        dots.forEach((dot, i) => dot.addEventListener('click', () => { showSlide(i); restart(); }));
+        restart();
+      })();
+    </script>
 </body>
 </html>
